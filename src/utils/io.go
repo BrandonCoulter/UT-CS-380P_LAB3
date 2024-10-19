@@ -12,7 +12,7 @@ func FileReader(file_path string, isPrint bool)[]string{
 	// Read file and extract data as a single string
 	data, err := ioutil.ReadFile(file_path)
 	if err != nil {
-		fmt.Printf("An error occured reading the file: %s\n\tError: %s", file_path, err)
+		fmt.Printf("An error occured reading the file: %s\n\tError: %s\n", file_path, err)
 	}
 
 	// Split string into single lines based on newline character

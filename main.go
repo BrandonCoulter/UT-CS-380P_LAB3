@@ -7,21 +7,28 @@ import (
 )
 func main() {
 
-	hash_workers, data_workers, comp_workers, input_file, isPrint := utilities.ArgumentParser()
+	args := &utilities.ArgumentParser{}
+	args.ParseArgs()
 
-	if isPrint{
-		fmt.Printf("CMD Args:\nInput: %s\nHash Workers: %d\nData Workers: %d\nComp Workers: %d\n" ,input_file, hash_workers, data_workers, comp_workers)
+	if *args.IsPrint {
+		fmt.Printf("CMD Args:\nInput: %s\nHash Workers: %d\nData Workers: %d\nComp Workers: %d\n" , *args.Input_file, *args.Hash_workers, *args.Data_workers, *args.Comp_workers)
 	}
 
-	lines := utilities.FileReader(input_file, isPrint)
+	lines := utilities.FileReader(*args.Input_file, *args.IsPrint)
 
-	if isPrint{
-			for _, item := range lines {
-		fmt.Println(item)
-	}
+	if *args.IsPrint{
+		for _, item := range lines {
+			fmt.Println(item)
+		}
 	}
 
-	if hash_workers == 1 && data_workers == 1 {
-		sequential.BSTSeqential(lines, isPrint)
+	if *args.Hash_workers == 1 {
+		sequential.BSTSeqential(lines, args)
+	} else if *args.Hash_workers > 1 && *args.Data_workers == 1 {
+		//Part 2
+	} else if *args.Hash_workers > 1 && *args.Data_workers > 1 && *args.Hash_workers == *args.Data_workers {
+		//Part 3
+	} else if *args.Hash_workers > 1 && *args.Data_workers > 1 && *args.Hash_workers != *args.Data_workers {
+		//Extra Credit
 	}
 }

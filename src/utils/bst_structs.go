@@ -1,33 +1,30 @@
 package utilities
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 
 type BSTRootNode struct {
-	ID int
 	Root *Node
+	ID int
 	Hash int
+	InPlaceOrder string
 }
-
-// TODO: I may not need this function, check back after testing
-// Create the root node of a BST 
-// func (bst *BSTRootNode) InsertRoot(value int) {
-// 	bst.root = InsertNode(bst.root, value)
-// 	bst.Hash = 1
-
-// }
 
 func (bst *BSTRootNode) InsertNode(value int) {
 	InsertNode(bst.Root, value)
 }
 
 // Generate the hash number for a BST using in order traversal
-func (bst *BSTRootNode) GenHashNumber(node *Node, isPrint bool){
+func (bst *BSTRootNode) GenHashNumber(node *Node, args *ArgumentParser){
 	if node != nil {
-		bst.GenHashNumber(node.Left, isPrint)
-		if isPrint { fmt.Printf(" %d ", node.Value) }
+		bst.GenHashNumber(node.Left, args)
+		if *args.IsPrint { fmt.Printf(" %d ", node.Value) }
 		bst.Hash = AddToHash(bst.Hash, node.Value)
-		bst.GenHashNumber(node.Right, isPrint)
+		bst.InPlaceOrder += strconv.Itoa(node.Value)
+		bst.GenHashNumber(node.Right, args)
 	}
 }
 
@@ -57,7 +54,7 @@ func InsertNode(node *Node, value int) *Node {
 
 	if value < node.Value {
 		node.Left = InsertNode(node.Left, value)
-	} else if value > node.Value {
+	} else if value >= node.Value {
 		node.Right = InsertNode(node.Right, value)
 	}
 	return node

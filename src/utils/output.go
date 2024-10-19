@@ -4,9 +4,21 @@ import (
 	"fmt"
 )
 
-func PrintHashGroups(time float32, hashes []interface{}){
+//FIXME: Make sure thqt hash print out is correctly formated
+func PrintHashGroups(time float64, hashes map[int][]*BSTRootNode){
 	fmt.Printf("hashGroupTime: %f\n", time)
-	for _, hash := range hashes {
-		fmt.Println(hash) //FIXME: Change the print hash output to match specifications
+	for hash, group := range hashes {
+		if len(hashes[hash]) > 1 {
+			fmt.Printf("%d: ", hash)
+			for _, node := range group {
+				fmt.Printf("%d ", node.ID)
+			}
+			fmt.Printf("\n")
+		}
 	}
+}
+
+func PrintCompTree(time float64, comps map[int][]*BSTRootNode){
+	fmt.Printf("compareTreeTime: %f\n", time)
+
 }
