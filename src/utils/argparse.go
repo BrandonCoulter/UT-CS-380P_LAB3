@@ -13,7 +13,7 @@ func ArgumentParser()(int, int, int, string, bool){
 	input_file := flag.String("input", "", "string-valued path to an input file")
 
 	// Custom flags
-	isPrint := flag.Bool("print", false, "Enable debug printouts")
+	isPrint := flag.Bool("p", false, "Enable debug printouts")
 	
 	flag.Parse()
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	sequential "lab3/src/sequential"
 	utilities "lab3/src/utils"
 )
 func main() {
@@ -14,7 +15,13 @@ func main() {
 
 	lines := utilities.FileReader(input_file, isPrint)
 
-	for _, item := range lines {
+	if isPrint{
+			for _, item := range lines {
 		fmt.Println(item)
+	}
+	}
+
+	if hash_workers == 1 && data_workers == 1 {
+		sequential.BSTSeqential(lines, isPrint)
 	}
 }
