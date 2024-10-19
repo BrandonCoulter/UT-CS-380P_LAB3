@@ -1,8 +1,7 @@
-package main
+package utilities
 
 import (
 	"flag"
-	"fmt"
 )
 
 func ArgumentParser()(int, int, int, string, bool){
@@ -20,9 +19,3 @@ func ArgumentParser()(int, int, int, string, bool){
 
 	return *hash_workers, *data_workers, *comp_workers, *input_file, *isPrint
 } 
-
-func FileReader(file_path string, isPrint bool){
-	if isPrint {
-		fmt.Printf("Reading File: %s\n", file_path)
-	}
-}
