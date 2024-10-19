@@ -1,0 +1,5 @@
+#Ignore Lab Extras
+utils/*
+
+#Ignore custom files and ENV sourcing
+alias.bashrc
