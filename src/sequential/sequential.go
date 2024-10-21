@@ -54,7 +54,7 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 	
 	// Print Comp groups
 	if *args.Comp_workers > 0 {
-		// CompareBST()
+		utilities.PrintCompTree(timer.TrackTime().Seconds(), CompareBST(hashes))
 	}
 
 }
@@ -72,12 +72,16 @@ func BuildBST(data []int, id int) *utilities.BSTRootNode {
 	return &root
 }
 
-// func CompareBST(hashes map[int][]*utilities.BSTRootNode) {
-// 	groups := make(map[int][]*utilities.BSTRootNode)
+func CompareBST(hashes map[int][]*utilities.BSTRootNode) map[string][]*utilities.BSTRootNode {
+	groups := make(map[string][]*utilities.BSTRootNode)
 
-// 	for hash, group := range hashes {
-
+	for _, group := range hashes {
 		
+		for _, node := range group {
+			groups[node.InPlaceOrder] = append(groups[node.InPlaceOrder], node)
+		}
 
-// 	}
-// }
+	}
+
+	return groups
+}

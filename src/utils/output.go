@@ -18,7 +18,18 @@ func PrintHashGroups(time float64, hashes map[int][]*BSTRootNode){
 	}
 }
 
-func PrintCompTree(time float64, comps map[int][]*BSTRootNode){
+func PrintCompTree(time float64, comps map[string][]*BSTRootNode){
 	fmt.Printf("compareTreeTime: %f\n", time)
+	group_count := 0
+	for comp, group := range comps {
+		if len(comps[comp]) > 1 {
+			fmt.Printf("group %d: ", group_count)
+			for _, node := range group {
+				fmt.Printf("%d ", node.ID)
+			}
+			fmt.Printf("\n")
+			group_count += 1
+		}
+	}
 
 }
