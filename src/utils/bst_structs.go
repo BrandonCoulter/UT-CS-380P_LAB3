@@ -2,7 +2,6 @@ package utilities
 
 import (
 	"fmt"
-	"strconv"
 )
 
 
@@ -10,7 +9,7 @@ type BSTRootNode struct {
 	Root *Node
 	ID int
 	Hash int
-	InPlaceOrder string
+	InPlaceOrder []int
 }
 
 func (bst *BSTRootNode) InsertNode(value int) {
@@ -23,7 +22,7 @@ func (bst *BSTRootNode) GenHashNumber(node *Node, args *ArgumentParser){
 		bst.GenHashNumber(node.Left, args)
 		if *args.IsPrint { fmt.Printf(" %d ", node.Value) }
 		bst.Hash = AddToHash(bst.Hash, node.Value)
-		bst.InPlaceOrder += strconv.Itoa(node.Value)
+		bst.InPlaceOrder = append(bst.InPlaceOrder, node.Value)
 		bst.GenHashNumber(node.Right, args)
 	}
 }

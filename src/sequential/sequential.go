@@ -60,7 +60,7 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 }
 
 func BuildBST(data []int, id int) *utilities.BSTRootNode {
-	root := utilities.BSTRootNode{ID: id, Root: &utilities.Node{Value: data[0], Left: nil, Right: nil}, Hash: 1, InPlaceOrder: ""}
+	root := utilities.BSTRootNode{ID: id, Root: &utilities.Node{Value: data[0], Left: nil, Right: nil}, Hash: 1}
 	for i, value := range data {
 		if i == 0 { 
 			continue
@@ -78,7 +78,8 @@ func CompareBST(hashes map[int][]*utilities.BSTRootNode) map[string][]*utilities
 	for _, group := range hashes {
 		
 		for _, node := range group {
-			groups[node.InPlaceOrder] = append(groups[node.InPlaceOrder], node)
+			groupID := fmt.Sprint(node.InPlaceOrder)
+			groups[groupID] = append(groups[groupID], node)
 		}
 
 	}
