@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-//FIXME: Make sure thqt hash print out is correctly formated
 func PrintHashGroups(time float64, hashes map[int][]*BSTRootNode){
 	fmt.Printf("hashGroupTime: %f\n", time)
 	for hash, group := range hashes {
