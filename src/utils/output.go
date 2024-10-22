@@ -5,7 +5,7 @@ import (
 )
 
 func PrintHashGroups(time float64, hashes map[int][]*BSTRootNode){
-	fmt.Printf("hashGroupTime: %f\n", time)
+	fmt.Printf("hashGroupTime: %f Num Trees: %d\n", time, len(hashes))
 	for hash, group := range hashes {
 		if len(hashes[hash]) > 1 {
 			fmt.Printf("%d: ", hash)

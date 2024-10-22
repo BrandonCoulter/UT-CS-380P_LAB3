@@ -31,7 +31,7 @@ def FindHashGroups(data, compare):
     other_groups_dont_match = [item for item in compare if item not in data]
 
     if groups_dont_match:
-        print(f"Couldn't find a matching hash group for {groups_dont_match}")
+        print(f"Couldn't find a matching hash group for {len(groups_dont_match)} hash groups")
     elif other_groups_dont_match:
         print(f"The following hash groups are missing from your data set {other_groups_dont_match}")
     else:

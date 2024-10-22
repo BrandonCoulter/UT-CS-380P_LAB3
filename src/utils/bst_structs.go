@@ -17,16 +17,15 @@ func (bst *BSTRootNode) InsertNode(value int) {
 }
 
 // Generate the hash number for a BST using in order traversal
-func (bst *BSTRootNode) GenHashNumber(node *Node, args *ArgumentParser){
+func (bst *BSTRootNode) GenHashNumber(node *Node, args *ArgumentParser, gen_in_place bool){
 	if node != nil {
-		bst.GenHashNumber(node.Left, args)
+		bst.GenHashNumber(node.Left, args, gen_in_place)
 		if *args.IsPrint { fmt.Printf(" %d ", node.Value) }
 		bst.Hash = AddToHash(bst.Hash, node.Value)
-		bst.InPlaceOrder = append(bst.InPlaceOrder, node.Value)
-		bst.GenHashNumber(node.Right, args)
+        if gen_in_place { bst.InPlaceOrder = append(bst.InPlaceOrder, node.Value) }
+		bst.GenHashNumber(node.Right, args, gen_in_place)
 	}
 }
-
 // Add to hash number based on function given in the instructions
 func AddToHash(hash int, value int) int {
 	new_value := value + 2

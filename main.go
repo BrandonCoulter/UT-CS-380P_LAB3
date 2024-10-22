@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+    parallel "lab3/src/parallel"
 	sequential "lab3/src/sequential"
 	utilities "lab3/src/utils"
 )
@@ -31,7 +32,8 @@ func main() {
 	// Run differnt test cases based on CMD arguments
 	if *args.Hash_workers == 1 {
 		sequential.BSTSeqential(lines, args) // Run seqential
-	} else if *args.Hash_workers > 1 && *args.Data_workers == 1 {
+	} else if *args.Hash_workers > 1 {
+        parallel.BSTParallel(lines, args)
 		//Part 2
 	} else if *args.Hash_workers > 1 && *args.Data_workers > 1 && *args.Hash_workers == *args.Data_workers {
 		//Part 3
