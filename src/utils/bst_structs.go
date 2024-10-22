@@ -57,3 +57,9 @@ func InsertNode(node *Node, value int) *Node {
 	}
 	return node
 }
+
+
+type CompareResult struct {
+	Node *BSTRootNode
+	GroupID string
+}

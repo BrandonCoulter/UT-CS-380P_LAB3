@@ -1,12 +1,12 @@
 package parallel
 
 import (
-    "fmt"
-    // @ts-ignore
+	"fmt"
+	// @ts-ignore
 	utilities "lab3/src/utils"
-    "strconv"
+	"strconv"
 	"strings"
-    "sync"
+	"sync"
 	"time"
 )
 
@@ -16,6 +16,10 @@ func BSTParallel(data []string, args *utilities.ArgumentParser) {
     
     // Create a list of binary Search trees
     bst_trees := make([]*utilities.BSTRootNode, 0)
+    // Map of hash numbers to slice of root nodes
+    hashes := make(map[int][]*utilities.BSTRootNode)
+    // Create an empty map to hold each group
+    groups := make(map[string][]*utilities.BSTRootNode)
 
     // Channel for passing node to get returned
     node_channel := make(chan *utilities.BSTRootNode)
@@ -46,9 +50,6 @@ func BSTParallel(data []string, args *utilities.ArgumentParser) {
 	if *args.Data_workers > 0 {
 
         timer.Start = time.Now() // Restart timer for Hash BST calculation/grouping
-
-        // Map of hash numbers to slice of root nodes
-	    hashes := make(map[int][]*utilities.BSTRootNode)
         
         // Channel for passing hashes to get mapped
         hash_channel := make(chan *utilities.BSTRootNode)
@@ -68,11 +69,40 @@ func BSTParallel(data []string, args *utilities.ArgumentParser) {
             // Append the bst to a Hash group or create a new group if non-existent
             hashes[root.Hash] = append(hashes[root.Hash], root)
         }
-
         
         utilities.PrintHashGroups(timer.TrackTime().Seconds(), hashes) // Print the hash groups
-        
 	}
+
+    if *args.Comp_workers > 0 {
+
+        timer.Start = time.Now() // Restart timer for Compare BST calculation/grouping
+
+        // Channel for passing hashes to get mapped
+        comp_channel := make(chan *utilities.CompareResult)
+
+        // For each hash group in the hashes check if they are 
+        for _, group := range hashes {
+            // If there are more then 1 BST in the hash group
+            // If there is only 1, there need not be a reason to check it
+            if len(group) > 1 {
+                for _, node := range group {
+                    wait_group.Add(1)
+                    go CompareBST(node, comp_channel, &wait_group)
+                }
+            }
+        }
+        go func() {
+            wait_group.Wait()    
+            close(comp_channel)
+        }()
+
+        for result := range comp_channel{
+            // Append the bst to a Hash group or create a new group if non-existent
+            groups[result.GroupID] = append(groups[result.GroupID], result.Node)
+        }
+
+        utilities.PrintCompTree(timer.TrackTime().Seconds(), groups) // Print groups
+    }
 
 }
 
@@ -128,4 +158,14 @@ func GroupBST(root_node *utilities.BSTRootNode, hc chan *utilities.BSTRootNode, 
     if *args.IsPrint{fmt.Printf("\n")}
 
     hc <- root_node // Return root with mapped In place order value slice via channel
+}
+
+func CompareBST(root_node *utilities.BSTRootNode, cc chan *utilities.CompareResult, wg *sync.WaitGroup) {
+
+    defer wg.Done()
+    
+    result := utilities.CompareResult{GroupID: fmt.Sprint(root_node.InPlaceOrder), Node: root_node}
+
+	// Return the group info
+    cc <- &result
 }

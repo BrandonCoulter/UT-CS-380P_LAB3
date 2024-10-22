@@ -25,31 +25,34 @@ def ReadFile(path):
         data.close()
     return lines
 
+def NormalizeGroups(groups):
+    # Sort each group (assumes each group is a string of items separated by spaces or commas)
+    sorted_groups = [' '.join(sorted(group.split())) for group in groups]
+    # Sort the entire list of groups
+    return sorted(sorted_groups)
+
+def ListsMatch(data, compare):
+    normalized_data = NormalizeGroups(data)
+    normalized_compare = NormalizeGroups(compare)
+
+    if normalized_data == normalized_compare:
+        return True
+    else:
+        return False
+
 def FindHashGroups(data, compare):
 
-    groups_dont_match = [item for item in data if item not in compare]
-    other_groups_dont_match = [item for item in compare if item not in data]
-
-    if groups_dont_match:
-        print(f"Couldn't find a matching hash group for {len(groups_dont_match)} hash groups")
-    elif other_groups_dont_match:
-        print(f"The following hash groups are missing from your data set {other_groups_dont_match}")
-    else:
+    if ListsMatch(data, compare):
         print("All hash groups match")
-
+    else:
+        print("Error: Mismatched Hash Groups")
 
 def FindGroups(data, compare):
 
-    groups_dont_match = [item for item in data if item not in compare]
-    other_groups_dont_match = [item for item in compare if item not in data]
-
-    if groups_dont_match:
-        print(f"Couldn't find a matching group for {groups_dont_match}")
-    elif other_groups_dont_match:
-        print(f"The following groups are missing from your data set {other_groups_dont_match}")
+    if ListsMatch(data, compare):
+        print("All comparison groups match")
     else:
-        print("All groups match")
-
+        print("Error: Mismatched comparison Groups")
 
 def main(args):
 

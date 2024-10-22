@@ -1,38 +1,38 @@
-hashTime: 0.548436
-hashGroupTime: 0.252519
+hashTime: 0.235296
+hashGroupTime: 0.025710 Num Trees: 2
 31: 0 3 9 13 15 16 17 22 24 27 28 30 32 35 37 43 45 46 48 49 52 54 60 64 65 66 74 78 79 86 88 89 90 91 94 98 
 191: 1 2 4 5 6 7 8 10 11 12 14 18 19 20 21 23 25 26 29 31 33 34 36 38 39 40 41 42 44 47 50 51 53 55 56 57 58 59 61 62 63 67 68 69 70 71 72 73 75 76 77 80 81 82 83 84 85 87 92 93 95 96 97 99 
-compareTreeTime: 0.400034
-group 0: 91 98 
-group 1: 28 54 94 
-group 2: 30 88 
-group 3: 37 52 89 
-group 4: 23 33 51 
-group 5: 26 34 63 
-group 6: 81 85 97 
-group 7: 15 24 49 
-group 8: 5 31 
-group 9: 8 80 
-group 10: 12 73 87 
-group 11: 25 36 
-group 12: 40 62 
-group 13: 16 27 35 78 
-group 14: 1 55 
-group 15: 6 47 
-group 16: 19 21 
-group 17: 20 53 75 
-group 18: 56 95 
-group 19: 3 60 
-group 20: 17 65 
-group 21: 4 71 
-group 22: 10 76 
-group 23: 11 18 29 96 
-group 24: 42 68 92 
-group 25: 69 70 
-group 26: 74 79 
-group 27: 14 50 57 
-group 28: 41 83 
-group 29: 59 77 
-group 30: 0 9 45 86 
-group 31: 38 93 99 
-group 32: 67 72 
+compareTreeTime: 0.077966
+group 0: 23 33 51 
+group 1: 40 62 
+group 2: 3 60 
+group 3: 15 24 49 
+group 4: 11 18 29 96 
+group 5: 20 53 75 
+group 6: 59 77 
+group 7: 69 70 
+group 8: 10 76 
+group 9: 1 55 
+group 10: 6 47 
+group 11: 8 80 
+group 12: 12 73 87 
+group 13: 25 36 
+group 14: 42 68 92 
+group 15: 17 65 
+group 16: 5 31 
+group 17: 30 88 
+group 18: 37 52 89 
+group 19: 19 21 
+group 20: 81 85 97 
+group 21: 0 9 45 86 
+group 22: 91 98 
+group 23: 4 71 
+group 24: 38 93 99 
+group 25: 41 83 
+group 26: 56 95 
+group 27: 67 72 
+group 28: 16 27 35 78 
+group 29: 74 79 
+group 30: 26 34 63 
+group 31: 28 54 94 
+group 32: 14 50 57 
