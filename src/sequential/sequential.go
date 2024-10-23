@@ -35,42 +35,45 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 		// Build the BST and calculate Hash # and assign to Hash map
 		if len(bst) > 0 {
 			root := BuildBST(bst, ID) // Returns the root of the BST
+			root.GenHashNumber(root.Root, false, true) // Generate In place order without hash values
 			bst_tree = append(bst_tree, root)
 		}
 	}
 
+	/*********************
+	*     BST HASHING    * 
+	**********************/
+
 	// Store the start time
 	timer := utilities.Timer{Start: time.Now()}
 
-	for _, root := range bst_tree {
-		root.GenHashNumber(root.Root, args, true) // Generate the Hash Value and In place order
-			
-		// Print a new line because GenHashNumbers prints out in place order
-		if *args.IsPrint{fmt.Printf("\n")}
-	}
+	HashBST(bst_tree)
 
 	// Print sequential Hashtime
 	fmt.Printf("hashTime: %f\n", timer.TrackTime().Seconds())
 
+	/*********************
+	*   HASH GROUPING    * 
+	**********************/
+
 	timer.Start = time.Now()
 
-	for _, root := range bst_tree {
-
-		// Append the bst to a Hash group or create a new group if non-existent
-		hashes[root.Hash] = append(hashes[root.Hash], root)
-	}
+	hashes = GroupBST(bst_tree)
 
 	// Print Hash groups
 	if *args.Data_workers > 0 {
 		utilities.PrintHashGroups(timer.TrackTime().Seconds(), hashes)
 	}
-	
-	timer.Start = time.Now()
-	
+
+	/*********************
+	*    TREE COMPARE    * 
+	**********************/
+
+	timer.Start = time.Now() // Restart timer for Compare BST calculation/grouping
+	groups := CompareBST(hashes) // Collect groups
+
 	// Print Comp groups
 	if *args.Comp_workers > 0 {
-		timer.Start = time.Now() // Restart timer for Compare BST calculation/grouping
-		groups := CompareBST(hashes) // Collect groups
 		utilities.PrintCompTree(timer.TrackTime().Seconds(), groups) // Print groups
 	}
 
@@ -93,6 +96,25 @@ func BuildBST(data []int, id int) *utilities.BSTRootNode {
 
 	// Return a reference to the root node
 	return &root
+}
+
+func HashBST(bst_tree []*utilities.BSTRootNode){
+	for _, root := range bst_tree {
+		root.GenHashNumber(root.Root, true, false) // Generate the Hash Value and without In place order
+	}
+}
+
+func GroupBST(bst_tree []*utilities.BSTRootNode) map[int][]*utilities.BSTRootNode {
+	// Map of hash numbers to slice of root nodes
+	hashes := make(map[int][]*utilities.BSTRootNode)
+	
+	for _, root := range bst_tree {
+
+		// Append the bst to a Hash group or create a new group if non-existent
+		hashes[root.Hash] = append(hashes[root.Hash], root)
+	}
+
+	return hashes
 }
 
 // Function to compare BST based on in-order traversal hash

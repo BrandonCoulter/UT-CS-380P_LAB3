@@ -139,7 +139,7 @@ func BuildBST(id int, line string, nc chan *utilities.BSTRootNode, wg *sync.Wait
         }
         
         // Generate the Hash Value without mapping In place order
-        root.GenHashNumber(root.Root, args, false)
+        root.GenHashNumber(root.Root, true, false)
         // Appended the root node to the list of BSTs via the node_channel
         nc <- &root
     }
@@ -153,7 +153,7 @@ func GroupBST(root_node *utilities.BSTRootNode, hc chan *utilities.BSTRootNode, 
     defer wg.Done()
 
     // Regenerate the Hash value with mapping In place order 
-    root_node.GenHashNumber(root_node.Root, args, true)
+    root_node.GenHashNumber(root_node.Root, false, true)
     // Print a new line because GenHashNumbers prints out in place order
     if *args.IsPrint{fmt.Printf("\n")}
 
