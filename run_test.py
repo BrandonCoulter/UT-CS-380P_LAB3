@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import argparse
 from subprocess import check_output as co
 
@@ -14,8 +15,20 @@ args = parser.parse_args()
 
 INPUT = ["coarse.txt", "fine.txt", "test1.txt", "test2.txt", "test3.txt", "test4.txt", "test5.txt"] if args.input == 'all' else args.input
 
+out = ''
+print("Cleaning BST Build")
+if os.path.isfile("BST.go"):
+    out = co("rm BST.go", shell=True).decode("ascii")
+elif os.path.isfile("BST_opt.go"):
+    out = co("rm BST_opt.go", shell=True).decode("ascii")
+print("Building BST Executable")
+out = co("go build -o BST.go", shell=True).decode("ascii")
+
+print(out)
+
+
 for inp in INPUT:
-    cmd = f"go run . -hash-workers {args.hash} -data-workers {args.data} -comp-workers {args.comp} -input input/{inp} > {args.output}{inp}; cat {args.output}{inp}"
+    cmd = f"./BST.go -hash-workers {args.hash} -data-workers {args.data} -comp-workers {args.comp} -input input/{inp} > {args.output}{inp}; cat {args.output}{inp}"
 
     out = co(cmd, shell=True).decode("ascii")
     hashtime = out.split("hashtime:")[-1].split("\n")[0].strip()

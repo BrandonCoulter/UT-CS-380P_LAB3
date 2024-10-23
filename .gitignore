@@ -6,3 +6,12 @@ alias.bashr
 
 #Ignore outputs
 output/*
+
+#Ignore Executables
+BST.go
+BST_opt.go
+
+#Ignore aliases/sources
+*.bashrc
+*.zshrc
+*.cshrc
