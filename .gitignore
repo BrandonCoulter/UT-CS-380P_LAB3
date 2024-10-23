@@ -2,4 +2,7 @@
 utils/*
 
 #Ignore custom files and ENV sourcing
-alias.bashrc
+alias.bashr
+
+#Ignore outputs
+output/*c
