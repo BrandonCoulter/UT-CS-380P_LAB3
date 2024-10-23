@@ -5,4 +5,4 @@ utils/*
 alias.bashr
 
 #Ignore outputs
-output/*c
+output/*

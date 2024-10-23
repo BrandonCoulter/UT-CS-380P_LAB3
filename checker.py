@@ -38,6 +38,9 @@ def ListsMatch(data, compare):
     if normalized_data == normalized_compare:
         return True
     else:
+        print(f"Len Data: {len(normalized_data)}")
+        print(f"Len Comp: {len(normalized_compare)}")
+        # print(abs(len(normalized_data) - len(normalized_compare)), " ")
         return False
 
 def FindHashGroups(data, compare):

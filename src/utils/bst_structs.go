@@ -22,7 +22,9 @@ func (bst *BSTRootNode) GenHashNumber(node *Node, args *ArgumentParser, gen_in_p
 		bst.GenHashNumber(node.Left, args, gen_in_place)
 		if *args.IsPrint { fmt.Printf(" %d ", node.Value) }
 		bst.Hash = AddToHash(bst.Hash, node.Value)
-        if gen_in_place { bst.InPlaceOrder = append(bst.InPlaceOrder, node.Value) }
+        if gen_in_place {
+			bst.InPlaceOrder = append(bst.InPlaceOrder, node.Value)
+		}
 		bst.GenHashNumber(node.Right, args, gen_in_place)
 	}
 }
@@ -56,4 +58,10 @@ func InsertNode(node *Node, value int) *Node {
 		node.Right = InsertNode(node.Right, value)
 	}
 	return node
+}
+
+
+type CompareResult struct {
+	Node *BSTRootNode
+	GroupID string
 }

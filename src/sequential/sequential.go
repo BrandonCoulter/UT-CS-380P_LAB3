@@ -38,8 +38,8 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 			root := BuildBST(bst, ID) // Returns the root of the BST
 			root.GenHashNumber(root.Root, args, true) // Generate the Hash Value and In place order
 			
-			 // Print a new line because GenHashNumbers prints out in place order
-			if *args.IsPrint{fmt.Printf("\n")}
+		// Print a new line because GenHashNumbers prints out in place order
+	   if *args.IsPrint{fmt.Printf("\n")}
 
 			// Append the bst to a Hash group or create a new group if non-existent
 			hashes[root.Hash] = append(hashes[root.Hash], root)
@@ -48,7 +48,7 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 
 	// Print sequential Hashtime
 	fmt.Printf("hashTime: %f\n", timer.TrackTime().Seconds())
-	
+
 	// Print Hash groups
 	if *args.Data_workers > 0 {
 		utilities.PrintHashGroups(timer.TrackTime().Seconds(), hashes)
