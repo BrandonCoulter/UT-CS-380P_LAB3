@@ -36,6 +36,7 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 		if len(bst) > 0 {
 			root := BuildBST(bst, ID) // Returns the root of the BST
 			root.GenHashNumber(root.Root, false, true) // Generate In place order without hash values
+            root.Key = fmt.Sprintf("%v", root.InPlaceOrder)
 			bst_tree = append(bst_tree, root)
 		}
 	}
@@ -128,9 +129,8 @@ func CompareBST(hashes map[int][]*utilities.BSTRootNode) map[string][]*utilities
 		// If there are more then 1 BST in the hash group
 		// If there is only 1, there need not be a reason to check it
 		if len(group) > 1 {
-			for _, node := range group {
-				groupID := fmt.Sprint(node.InPlaceOrder) // Create a in-order traversal key
-				groups[groupID] = append(groups[groupID], node) // Map that key to each node it applys too
+			for _, root := range group {
+				groups[root.Key] = append(groups[root.Key], root) // Map that key to each node it applys too
 			}
 		}
 	}

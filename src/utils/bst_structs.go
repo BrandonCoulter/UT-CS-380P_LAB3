@@ -6,6 +6,7 @@ type BSTRootNode struct {
 	ID int
 	Hash int
 	InPlaceOrder []int
+    Key string
 }
 
 func (bst *BSTRootNode) InsertNode(value int) {
