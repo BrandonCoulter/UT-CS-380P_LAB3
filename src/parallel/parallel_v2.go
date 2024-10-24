@@ -43,8 +43,6 @@ func BSTParallel(data []string, args *utilities.ArgumentParser) {
 	/*********************
 	*      CHANNELS      * 
 	**********************/   
-    // Hash Time
-    hash_complete := make(chan bool)
 
     // Hash Group Time
     update := make(chan Message)
@@ -60,15 +58,7 @@ func BSTParallel(data []string, args *utilities.ArgumentParser) {
 	timer := utilities.Timer{Start: time.Now()}
 
     // Spawn a hash worker for every BST
-    for i := 0; i < len(bst_tree); i++ {
-        go HashWorker(bst_tree[i], hash_complete)
-    }
-
-    // Collected all workers done messages before continuing
-    for i := 0; i < len(bst_tree); i++ {
-        <-hash_complete
-    }
-    close(hash_complete)
+	GoPerBST(bst_tree)
 
 	// Print sequential Hashtime
 	fmt.Printf("hashTime: %f\n", timer.TrackTime().Seconds())
