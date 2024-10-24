@@ -34,7 +34,7 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 
 		// Build the BST and calculate Hash # and assign to Hash map
 		if len(bst) > 0 {
-			root := BuildBST(bst, ID) // Returns the root of the BST
+			root := utilities.BuildBST(bst, ID) // Returns the root of the BST
 			root.GenHashNumber(root.Root, false, true) // Generate In place order without hash values
             root.Key = fmt.Sprintf("%v", root.InPlaceOrder)
 			bst_tree = append(bst_tree, root)
@@ -78,25 +78,6 @@ func BSTSeqential(data []string, args *utilities.ArgumentParser){
 		utilities.PrintCompTree(timer.TrackTime().Seconds(), groups) // Print groups
 	}
 
-}
-
-// Function to build the BST
-func BuildBST(data []int, id int) *utilities.BSTRootNode {
-	// Create the root node with ID, and intial Hash set to 1
-	root := utilities.BSTRootNode{ID: id, Root: &utilities.Node{Value: data[0], Left: nil, Right: nil}, Hash: 1}
-	// Iterate values and assign them to nodes
-	for i, value := range data {
-		// Skip value in index 0 since this is the root node
-		if i == 0 { 
-			continue
-		} else {
-			// Insert a node with the given value
-			root.InsertNode(value)
-		}
-	}
-
-	// Return a reference to the root node
-	return &root
 }
 
 func HashBST(bst_tree []*utilities.BSTRootNode){

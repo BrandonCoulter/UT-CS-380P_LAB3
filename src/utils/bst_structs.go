@@ -1,5 +1,8 @@
 package utilities
 
+/**************************/
+/*Binary Search Root Nodes*/
+/**************************/
 
 type BSTRootNode struct {
 	Root *Node
@@ -20,7 +23,7 @@ func (bst *BSTRootNode) GenHashNumber(node *Node, perform_hash bool, gen_in_plac
 
 		if perform_hash { bst.Hash = AddToHash(bst.Hash, node.Value) }
         if gen_in_place { bst.InPlaceOrder = append(bst.InPlaceOrder, node.Value) }
-		
+
 		bst.GenHashNumber(node.Right, perform_hash, gen_in_place)
 	}
 }
@@ -56,8 +59,25 @@ func InsertNode(node *Node, value int) *Node {
 	return node
 }
 
+/**************************/
+/*Binary Search Tree Funcs*/
+/**************************/
 
-type CompareResult struct {
-	Node *BSTRootNode
-	GroupID string
+// Function to build the BST
+func BuildBST(data []int, id int) *BSTRootNode {
+	// Create the root node with ID, and intial Hash set to 1
+	root := BSTRootNode{ID: id, Root: &Node{Value: data[0], Left: nil, Right: nil}, Hash: 1}
+	// Iterate values and assign them to nodes
+	for i, value := range data {
+		// Skip value in index 0 since this is the root node
+		if i == 0 { 
+			continue
+		} else {
+			// Insert a node with the given value
+			root.InsertNode(value)
+		}
+	}
+
+	// Return a reference to the root node
+	return &root
 }

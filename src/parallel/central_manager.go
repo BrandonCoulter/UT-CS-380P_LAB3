@@ -1,16 +1,16 @@
 package parallel
 
 import (
-    utilities "lab3/src/utils"
+	utilities "lab3/src/utils"
 )
 
 // Struct to hold messages used by the channel
 type Message struct {
-    Node *utilities.BSTRootNode
+    Root *utilities.BSTRootNode
     Hash int
 }
 
-func CentralHashManager(update chan Message, done chan bool) *map[int][]*utilities.BSTRootNode {
+func CentralHashManager(update chan Message, all_groupers_complete chan bool, hash_group_complete chan map[int][]*utilities.BSTRootNode){
 
     // Define the central map for hashes to root nodes
     hash_map := make(map[int][]*utilities.BSTRootNode)
@@ -18,11 +18,29 @@ func CentralHashManager(update chan Message, done chan bool) *map[int][]*utiliti
     for {
         select {
         case msg := <- update:
-            hash_map[msg.Hash] = append(hash_map[msg.Hash], msg.Node)
-        case <- done:
-            return &hash_map
+            hash_map[msg.Hash] = append(hash_map[msg.Hash], msg.Root)
+        case <- all_groupers_complete:
+            hash_group_complete <- hash_map
+            return
         }
     }
+}
 
-    return &hash_map
+func HashWorker(root *utilities.BSTRootNode, hashed chan bool){
+    // Generate the Hash Value and without In place order
+    root.GenHashNumber(root.Root, true, false)
+
+    // Let the main thread know that this worker is completed
+    hashed <- true
+}
+
+func HashGroupWorker(root *utilities.BSTRootNode, update chan Message, grouped_hash chan bool){
+    // Formulate a message to send via update channel
+    msg := Message{Root: root, Hash: root.Hash}
+
+    // Update the central map
+    update <- msg
+
+    // Let the main thread know that this worker is completed
+    grouped_hash <- true
 }
